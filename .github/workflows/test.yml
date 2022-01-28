@@ -1,0 +1,19 @@
+name: Go test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        go-version: [1.15, 1.16, 1.17]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: View context attributes
+      uses: actions/github-script@v5
+      with:
+        script: console.log(context)
