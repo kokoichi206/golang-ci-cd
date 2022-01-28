@@ -11,12 +11,23 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: View context attributes
         uses: actions/github-script@v5
         with:
           script: console.log(context)
+      - uses: actions/github-script@v5
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: context
+            })
       - uses: actions/github-script@v5
         if: github.event_name == 'pull_request'
         with:
@@ -28,5 +39,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: output
+              body: body
             })
