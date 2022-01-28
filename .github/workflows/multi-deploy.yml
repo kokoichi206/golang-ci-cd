@@ -1,8 +1,8 @@
 name: CICD to multi environments
 
 on:
-  push:
-    branches:
+  # push:
+  #   branches:
       # - main
 
 jobs:
